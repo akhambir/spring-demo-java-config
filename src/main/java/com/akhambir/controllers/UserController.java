@@ -19,7 +19,6 @@ public class UserController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ModelAndView login(@ModelAttribute User user, ModelAndView vm) {
-        System.out.println(user);
         return vm;
     }
 }
