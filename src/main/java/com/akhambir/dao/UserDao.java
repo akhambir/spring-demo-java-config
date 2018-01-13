@@ -1,8 +1,8 @@
-package com.akhambir.services;
+package com.akhambir.dao;
 
 import com.akhambir.model.User;
 
-public interface UserService {
+public interface UserDao {
 
     User addUser(User user);
 

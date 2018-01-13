@@ -1,18 +1,23 @@
 package com.akhambir.model;
 
+import java.time.LocalDateTime;
+
 public class User {
     private Long id;
-    private String username;
     private String password;
     private String email;
+    private String firstName;
+    private String lastName;
+    private LocalDateTime registerDate;
 
     public User() {}
 
-    public User(Long id, String username, String password, String email) {
-        this.id = id;
-        this.username = username;
+    public User(String password, String email, String firstName, String lastName, LocalDateTime registerDate) {
         this.password = password;
         this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.registerDate = registerDate;
     }
 
     public Long getId() {
@@ -21,14 +26,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -46,4 +43,30 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDateTime getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDateTime registerDate) {
+        this.registerDate = registerDate;
+    }
 }
+
+
