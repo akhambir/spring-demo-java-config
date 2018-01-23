@@ -3,8 +3,10 @@ package com.akhambir.controllers;
 import com.akhambir.model.User;
 import com.akhambir.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +17,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ConnectionRepository connectionRepository;
+
+    @Autowired
+    private Facebook facebook;
+
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public ModelAndView login(ModelAndView vm) {
@@ -41,4 +49,15 @@ public class UserController {
         vm.addObject("user", userService.addUser(user));
         return vm;
     }
+
+    @RequestMapping("/social")
+    public String helloFacebook(Model vm) {
+        /*if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
+            return "redirect:/connect/facebook";
+        }*/
+
+        //vm.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
+        return "social";
+    }
+
 }

@@ -3,9 +3,13 @@ package com.akhambir.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -16,6 +20,7 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.akhambir")
+@PropertySource("classpath:application.properties")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 
@@ -32,14 +37,14 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    @Bean
+    /*@Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource);
         return jdbcTemplate;
-    }
+    }*/
 
-    @Bean
+    /*@Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
@@ -47,7 +52,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
-    }
+    }*/
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
