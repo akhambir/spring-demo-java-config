@@ -5,12 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,8 +18,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @SequenceGenerator(name = "MAIN_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "USER_GEN")
+    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ")
     private Long id;
     @Column(name = "PASSWORD")
     private String password;
@@ -33,7 +33,7 @@ public class User {
     private LocalDateTime registerDate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
+    private List<ProductOrder> productOrders = new ArrayList<>();
 
     public User() {}
 
@@ -93,12 +93,17 @@ public class User {
         this.registerDate = registerDate;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
+    }
+
+    public void setProductOrder(ProductOrder productOrder) {
+        this.productOrders.add(productOrder);
+        productOrder.setUser(this);
     }
 }
 

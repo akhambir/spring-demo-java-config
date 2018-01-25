@@ -11,12 +11,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER")
-public class Order {
+@Table(name = "ORDERS")
+public class ProductOrder {
 
     @Id
-    @SequenceGenerator(name = "MAIN_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "ORDER_GEN")
+    @SequenceGenerator(name = "ORDER_GEN", sequenceName = "ORDER_SEQ")
     private Long id;
     @Column(name = "ORDER_DETAILS")
     private String details;
@@ -25,7 +25,11 @@ public class Order {
     @JoinColumn(name = "FK_USER_ID")
     private User user;
 
-    public Order() {}
+    public ProductOrder() {}
+
+    public ProductOrder(String details) {
+        this.details = details;
+    }
 
     public Long getId() {
         return id;

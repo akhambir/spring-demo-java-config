@@ -37,14 +37,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    /*@Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource);
-        return jdbcTemplate;
-    }*/
-
-    /*@Bean
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
@@ -52,7 +45,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
-    }*/
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

@@ -15,23 +15,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User addUser(User user) {
-        return (User) sessionFactory.getCurrentSession().save(user);
+        sessionFactory.getCurrentSession().save(user);
+        return user;
     }
 
-    /*@Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    public User addUser(User user) {
-        String sql = "INSERT INTO USERS " +
-                "(ID, EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, REGISTER_DATE)" +
-                " VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getRegisterDate());
+    public User findById(Long id) {
+        String query = "select u from  User as u " +
+                "inner join ProductOrder as o " +
+                "on u.id = o.id " +
+                "where u.id =:id";
+        User user = (User) sessionFactory
+                .getCurrentSession()
+                .createQuery(query)
+                .setParameter("id", id)
+                .uniqueResult();
         return user;
-    }*/
+    }
 }
