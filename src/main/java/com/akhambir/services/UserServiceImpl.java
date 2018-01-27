@@ -20,10 +20,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
-        user.setProductOrder(new ProductOrder("d1"));
-        user.setProductOrder(new ProductOrder("d2"));
-        user.setProductOrder(new ProductOrder("d3"));
-        user.setProductOrder(new ProductOrder("d4"));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRegisterDate(LocalDateTime.now());
         userDao.addUser(user);

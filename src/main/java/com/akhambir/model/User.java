@@ -1,5 +1,7 @@
 package com.akhambir.model;
 
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,13 +15,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "USERS")
 public class User {
 
     @Id
     @GeneratedValue(generator = "USER_GEN")
-    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ")
+    @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ", allocationSize = 1)
     private Long id;
     @Column(name = "PASSWORD")
     private String password;
@@ -36,70 +39,6 @@ public class User {
     private List<ProductOrder> productOrders = new ArrayList<>();
 
     public User() {}
-
-    public User(String password, String email, String firstName, String lastName, LocalDateTime registerDate) {
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.registerDate = registerDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getRegisterDate() {
-        return registerDate;
-    }
-
-    public void setRegisterDate(LocalDateTime registerDate) {
-        this.registerDate = registerDate;
-    }
-
-    public List<ProductOrder> getProductOrders() {
-        return productOrders;
-    }
-
-    public void setProductOrders(List<ProductOrder> productOrders) {
-        this.productOrders = productOrders;
-    }
 
     public void setProductOrder(ProductOrder productOrder) {
         this.productOrders.add(productOrder);
