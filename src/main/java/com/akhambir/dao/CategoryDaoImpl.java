@@ -23,4 +23,11 @@ public class CategoryDaoImpl implements CategoryDao {
                 .createQuery("from Category")
                 .list();
     }
+
+    @Override
+    public Category findById(Long cId) {
+        return sessionFactory
+                .getCurrentSession()
+                .find(Category.class, cId);
+    }
 }
