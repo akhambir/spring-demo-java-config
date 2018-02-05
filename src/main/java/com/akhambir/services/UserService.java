@@ -8,4 +8,7 @@ public interface UserService {
 
     User findById(Long id);
 
+    User findByToken(String token);
+
+    void activate(User user);
 }

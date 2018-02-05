@@ -19,6 +19,12 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Override
+    public User updateUser(User user) {
+        sessionFactory.getCurrentSession().update(user);
+        return user;
+    }
+
     public User findById(Long id) {
         String query = "select u from  User as u " +
                 "inner join ProductOrder as o " +
@@ -30,5 +36,12 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("id", id)
                 .uniqueResult();
         return user;
+    }
+
+    public User findByToken(String token) {
+        return (User) sessionFactory.getCurrentSession()
+                .createQuery("from User u where u.activationToken =:token")
+                .setParameter("token", token)
+                .uniqueResult();
     }
 }

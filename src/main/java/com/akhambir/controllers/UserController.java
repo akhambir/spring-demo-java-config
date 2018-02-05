@@ -8,6 +8,7 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,6 +48,14 @@ public class UserController {
     public ModelAndView register(@ModelAttribute User user, ModelAndView vm) {
         vm.setViewName("welcome");
         vm.addObject("user", userService.addUser(user));
+        return vm;
+    }
+
+    @RequestMapping(path = "/activate-user/{token}", method = RequestMethod.GET)
+    public ModelAndView activate(@PathVariable String token, ModelAndView vm) {
+        User user = userService.findByToken(token);
+        userService.activate(user);
+        vm.setViewName("activation");
         return vm;
     }
 

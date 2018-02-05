@@ -1,21 +1,23 @@
 package com.akhambir.configuration;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
@@ -50,5 +52,25 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("");
+        mailSender.setPassword("");
+        mailSender.setJavaMailProperties(mailProps());
+        return mailSender;
+    }
+
+    private Properties mailProps() {
+        Properties pMap = new Properties();
+        pMap.put("mail.transport.protocol", "smtp");
+        pMap.put("mail.smtp.auth", "true");
+        pMap.put("mail.smtp.starttls.enable", "true");
+        pMap.put("mail.debug", "true");
+        return pMap;
     }
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.EnumType.STRING;
 
 @Data
 @Entity
@@ -32,6 +36,11 @@ public class User {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
+    @Column(name = "ACTIVATION_TOKEN")
+    private String activationToken;
+    @Enumerated(STRING)
+    @Column(name = "ACCOUNT_STATUS")
+    private AccountStatus status;
     @Column(name = "REGISTER_DATE")
     private LocalDateTime registerDate;
 
@@ -43,6 +52,12 @@ public class User {
     public void setProductOrder(ProductOrder productOrder) {
         this.productOrders.add(productOrder);
         productOrder.setUser(this);
+    }
+
+    public enum AccountStatus {
+        PENDING_ACTIVATION,
+        ACTIVE,
+        BLOCKED
     }
 }
 
