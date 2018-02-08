@@ -7,11 +7,14 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -45,10 +48,15 @@ public class UserController {
     }
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
-    public ModelAndView register(@ModelAttribute User user, ModelAndView vm) {
+    public String register(@Valid User user, BindingResult result, ModelAndView vm) {
+        if (result.hasErrors()) {
+            vm.setViewName("signup");
+            vm.addObject("user", new User());
+            return "signup";
+        }
         vm.setViewName("welcome");
         vm.addObject("user", userService.addUser(user));
-        return vm;
+        return "welcome";
     }
 
     @RequestMapping(path = "/activate-user/{token}", method = RequestMethod.GET)

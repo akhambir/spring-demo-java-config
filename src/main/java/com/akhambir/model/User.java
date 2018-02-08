@@ -1,11 +1,11 @@
 package com.akhambir.model;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,9 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -28,8 +32,12 @@ public class User {
     @GeneratedValue(generator = "USER_GEN")
     @SequenceGenerator(name = "USER_GEN", sequenceName = "USER_SEQ", allocationSize = 1)
     private Long id;
+    @NotEmpty
+    @Size(min = 8)
     @Column(name = "PASSWORD")
     private String password;
+    @Email(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+    @NotEmpty
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "FIRST_NAME")
@@ -60,5 +68,3 @@ public class User {
         BLOCKED
     }
 }
-
-

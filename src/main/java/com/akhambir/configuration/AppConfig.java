@@ -1,10 +1,12 @@
 package com.akhambir.configuration;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,8 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 @EnableWebMvc
@@ -24,7 +24,6 @@ import java.util.Properties;
 @ComponentScan(basePackages = "com.akhambir")
 @PropertySource("classpath:application.properties")
 public class AppConfig extends WebMvcConfigurerAdapter {
-
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -47,6 +46,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasename("messages");
+        return source;
     }
 
     @Bean

@@ -16,6 +16,5 @@ public class MailServiceImpl implements MailService {
     @Override
     public void send(SimpleMailMessage message) {
         CompletableFuture.runAsync(() -> mailSender.send(message));
-        //mailSender.send(message);
     }
 }
