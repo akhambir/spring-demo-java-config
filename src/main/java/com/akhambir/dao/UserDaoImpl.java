@@ -44,4 +44,11 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("token", token)
                 .uniqueResult();
     }
+
+    public User findByEmail(String email) {
+        return (User) sessionFactory.getCurrentSession()
+                .createQuery("from User u where u.email =:email")
+                .setParameter("email", email)
+                .uniqueResult();
+    }
 }

@@ -4,6 +4,9 @@ import com.akhambir.dao.UserDao;
 import com.akhambir.model.ProductOrder;
 import com.akhambir.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,10 @@ import java.util.UUID;
 
 import static com.akhambir.model.User.AccountStatus.ACTIVE;
 import static com.akhambir.model.User.AccountStatus.PENDING_ACTIVATION;
+import static java.util.Collections.emptyList;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -33,9 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setActivationToken(getActivationToken());
         user.setStatus(PENDING_ACTIVATION);
         notificationService.sendAccountActivation(user);
-        userDao.addUser(user);
-        user = userDao.findById(user.getId());
-        return user;
+        return userDao.addUser(user);
     }
 
     @Override
@@ -56,5 +58,11 @@ public class UserServiceImpl implements UserService {
 
     private String getActivationToken() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userDao.findByEmail(email);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), emptyList());
     }
 }

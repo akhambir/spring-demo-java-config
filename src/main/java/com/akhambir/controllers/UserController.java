@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.apache.log4j.Logger;
 import javax.validation.Valid;
 
 @Controller
 public class UserController {
+
+    Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -29,19 +33,29 @@ public class UserController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public ModelAndView login(ModelAndView vm) {
+    public ModelAndView login(@RequestParam(value = "error",required = false) String error,
+                                 @RequestParam(value = "logout",	required = false) String logout,
+                                 ModelAndView vm) {
+        if (error != null) {
+            vm.addObject("error", "Invalid Credentials provided.");
+        }
+
+        if (logout != null) {
+            vm.addObject("message", "Logged out from JournalDEV successfully.");
+        }
+
         vm.setViewName("login");
         vm.addObject("user", new User());
         return vm;
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    /*@RequestMapping(path = "/login", method = RequestMethod.POST)
     public ModelAndView login(@ModelAttribute User user, ModelAndView vm) {
         return vm;
-    }
+    }*/
 
     @RequestMapping(path = "/signup", method = RequestMethod.GET)
-    public ModelAndView register(ModelAndView vm) {
+    public ModelAndView signup(ModelAndView vm) {
         vm.setViewName("signup");
         vm.addObject("user", new User());
         return vm;

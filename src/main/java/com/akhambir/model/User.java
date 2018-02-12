@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -51,6 +53,10 @@ public class User {
     private AccountStatus status;
     @Column(name = "REGISTER_DATE")
     private LocalDateTime registerDate;
+    @JoinColumn(name = "FK_USER_ROLE")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Role role;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<ProductOrder> productOrders = new ArrayList<>();

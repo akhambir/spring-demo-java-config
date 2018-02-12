@@ -11,4 +11,6 @@ public interface UserDao {
     User findById(Long id);
 
     User findByToken(String token);
+
+    User findByEmail(String email);
 }
